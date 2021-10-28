@@ -227,6 +227,7 @@ function getTag() {
 }
 
 async function getWeather() {
+  city = localStorage.getItem('city') || (lang ? 'Minsk' : 'Минск');
   cityInput.setAttribute('value', city.formatCity());
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${language}&appid=a577b21df2838235e562dac66bb4f133&units=metric`;
   const res = await fetch(url);
@@ -732,6 +733,7 @@ function translateSettings() {
   document.querySelector('.label-name').textContent = lang ? 'Name:' : 'Название:';
   document.querySelector('.label-link').textContent = lang ? 'Link:' : 'Ссылка:';
   document.querySelector('.add-button').textContent = lang ? 'Add' : 'Добавить';
+  document.querySelector('.name').setAttribute('placeholder', lang ? '[Enter name]' : '[Введите имя]');
 }
 
 function initAll() {
@@ -742,7 +744,7 @@ function initAll() {
   showCurrentSource();
   setBg();
   showPlayList();
-  getWeather('Minsk');
+  getWeather();
   getQuotes();
   translateSettings();
   showCurrentTag();
@@ -789,7 +791,6 @@ cityInput.addEventListener('change', function () {
 
 window.addEventListener('load', function () {
   username = localStorage.getItem('username') || '';
-  city = localStorage.getItem('city') || 'Minsk';
   initAll();
 });
 
@@ -802,23 +803,3 @@ document.getElementById('tag').addEventListener("keypress", function (event) {
     event.preventDefault();
   }
 });
-
-
-console.log(`
-                                                            
-Все пункты задания выполнены.
-Самооценка 160/150
-
-В качестве дополнительного функциоанала сделан список ссылок (кнопка в нижнем левом углу).
-По умолчанию сохранены две ссылки - RSS и мой гитхаб.
-При нажатии кнопки "+" открывается меню добавления новой ссылки. 
-У ссылки есть название и непосредственно адрес страницы, которая открывается при клике на ссылку.
-При нажатии на символ "х" около ссылки она удаляется. 
-Добавлять можно бесконечное количество ссылок, виджет имеет адаптивную высоту.
-
-Из особенностей основного приложения: 
-  -В настройках можно указать тэг для поиска изображений в Flickr и Unsplash.
-Если тег не валиден - источник изображения не изменится(сохранится предыдущий). После перезагрузки тег изменяется на дефолтный(nature), чтобы избежать зависания страницы на несуществующем теге.
-
-  -Картинки с Flickr подгружаются достаточно медленно, нужно подождать 3-7 секунд для обновления изображения. При обновлении страницы с Flickr в качестве источника первое время висит белый экран. Картинки по тегам тоже приходят не всегда идеальные, такой вот сервис :)
-`);
