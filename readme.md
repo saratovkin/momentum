@@ -1,6 +1,6 @@
 # Momentum
 
-Remake of the popular Google Chrome.
+Remake of the popular Google Chrome extension.
 
 ## Deploy
 [Momentum](https://rolling-scopes-school.github.io/saratovkin-JSFE2021Q3/momentum/)
